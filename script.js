@@ -37,26 +37,45 @@ function playerIsWinner(humanChoice, computerChoice){
     return false;
 }
 
-function determineWinner(humanChoice, computerChoice){
+function determineRoundWinner(humanChoice, computerChoice){
     if(humanChoice === computerChoice){
         reasonForOutcome = "You both made the same choice.";
         return "You tied!"
     }else if(playerIsWinner(humanChoice, computerChoice)){
         reasonForOutcome = humanChoice + " beats " + computerChoice;
-        return "You won!";
         humanScore++;
+        return "You won!";
     }
     reasonForOutcome = computerChoice + " beats " + humanChoice;
-    return "You lose!";
     computerScore++;
+    return "You lose!";
 }
 
 function playRound(humanChoice, computerChoice){
-    const outcome = determineWinner(humanChoice, computerChoice);
+    const outcome = determineRoundWinner(humanChoice, computerChoice);
     console.log(outcome + " " + reasonForOutcome);
 }
 
-let humanSelection = getHumanChoice();
-let computerSelection = getComputerChoice();
+function determineGameWinner(humanScore, computerScore){
+    if(humanScore > computerScore){
+        return "You have won the entire game!";
+    }else if(humanScore < computerScore){
+        return "The computer has won the entire game!";
+    }
+    return "No one won; You & the computer both have the same score.";
+}
 
-console.log(playRound(humanSelection, computerSelection));
+function playGame(){
+    let humanSelection;
+    let computerSelection;
+
+    for(let k = 0; k < 5; k++){
+        computerSelection = getComputerChoice();
+        humanSelection = getHumanChoice();
+        playRound(humanSelection, computerSelection);
+    }
+
+    console.log(determineGameWinner(humanScore, computerScore));
+}
+
+playGame();
