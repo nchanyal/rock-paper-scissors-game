@@ -65,17 +65,12 @@ function determineGameWinner(humanScore, computerScore){
     return "No one won; You & the computer both have the same score.";
 }
 
-function playGame(){
-    let humanSelection;
-    let computerSelection;
+let buttons = document.querySelectorAll("button");
 
-    for(let k = 0; k < 5; k++){
-        computerSelection = getComputerChoice();
-        humanSelection = getHumanChoice();
-        playRound(humanSelection, computerSelection);
-    }
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.id, getComputerChoice());
+    });
+});
 
-    console.log(determineGameWinner(humanScore, computerScore));
-}
-
-playGame();
+let displayContainer = document.createElement("div");
