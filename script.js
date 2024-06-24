@@ -40,20 +40,33 @@ function playerIsWinner(humanChoice, computerChoice){
 function determineRoundWinner(humanChoice, computerChoice){
     if(humanChoice === computerChoice){
         reasonForOutcome = "You both made the same choice.";
-        return "You tied!"
+        return "You tied this round!"
     }else if(playerIsWinner(humanChoice, computerChoice)){
-        reasonForOutcome = humanChoice + " beats " + computerChoice;
+        reasonForOutcome = humanChoice + " beats " + computerChoice + ".";
         humanScore++;
-        return "You won!";
+        return "You won this round!";
     }
-    reasonForOutcome = computerChoice + " beats " + humanChoice;
+    reasonForOutcome = computerChoice + " beats " + humanChoice + ".";
     computerScore++;
-    return "You lose!";
+    return "You lose this round!";
 }
 
 function playRound(humanChoice, computerChoice){
     const outcome = determineRoundWinner(humanChoice, computerChoice);
-    console.log(outcome + " " + reasonForOutcome);
+    const displayContainer = document.querySelector("#result");
+    const scoreContainer = document.querySelector("#score");
+    const winnerContainer = document.querySelector("#game-winner");
+
+    if(humanScore === 5){
+        displayContainer.textContent = "";
+        winnerContainer.textContent = "You won the game!";
+    }else if(computerScore === 5){
+        displayContainer.textContent = "";
+        winnerContainer.textContent = "The computer has won the game!";
+    }else {
+        displayContainer.textContent = outcome + " " + reasonForOutcome;
+    }
+    scoreContainer.textContent = "player's score: " + humanScore + " computer's score: " + computerScore;
 }
 
 function determineGameWinner(humanScore, computerScore){
@@ -65,12 +78,10 @@ function determineGameWinner(humanScore, computerScore){
     return "No one won; You & the computer both have the same score.";
 }
 
-let buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         playRound(button.id, getComputerChoice());
     });
 });
-
-let displayContainer = document.createElement("div");
